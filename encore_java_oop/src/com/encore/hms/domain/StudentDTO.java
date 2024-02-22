@@ -1,8 +1,10 @@
 package com.encore.hms.domain;
 
+
+
 import com.encore.hms.domain.sup.Person;
 
-public class StudentDTO extends Person{
+public class StudentDTO extends Person {
 
 	// 상속관계에서 공통의 요소로 제거
 //	private String name;

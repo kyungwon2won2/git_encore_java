@@ -1,25 +1,28 @@
 package com.encore.hms.view;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 import com.encore.hms.domain.EmployeeDTO;
 import com.encore.hms.domain.StudentDTO;
 import com.encore.hms.domain.TeacherDTO;
 import com.encore.hms.domain.sup.Person;
+import com.encore.hms.service.HmsListSerivce;
 import com.encore.hms.service.HmsService;
 import com.encore.hms.util.HmsType;
 
-public class HmsView {
+public class HmsListView {
 	
 	public static Scanner scan = new Scanner(System.in) ;  
 	
 	// HmsView 는 HmsService 와 의존성 주입(Dependency Injection)관계가 형성 
 	// 즉, HmsView는 HmsService의 객체 생성을 통한 접근을 필요로 하는 것.
 	
-	private HmsService service ; 
+	private HmsListSerivce service ; 
 	
-	public HmsView() {
-		service = new HmsService(10); 
+	public HmsListView() {
+		service = new HmsListSerivce(10); 
 	}
 	
 	public void mainMenu() {
@@ -154,20 +157,19 @@ public class HmsView {
 		System.out.println();
 		System.out.println(">>> 전체 출력 <<<<");
 		
-		Person [] perAry = service.getAry() ;
+		List<Person> perAry = service.getAry() ;
 		if(service.getIdx() == 0) {
 			System.out.println();
 			System.out.println(">>> 데이터가 존재하지 않습니다. <<<");
 			System.out.println();
 		}else {
 			
-			for(int idx = 0 ;  idx < perAry.length ; idx++) {
-				Person per = perAry[idx] ;
-				if(per == null) {
-					break;
-				}  
-				System.out.println(per.personInfo());
+			// Iterator -> for문 쓰는것보다 성능이 좋음
+			Iterator<Person> iter = perAry.iterator();
+			while(iter.hasNext()) {
+				System.out.println(iter.next().personInfo());
 			}
+			
 			///////// or 
 			/*
 			for(Person per : perAry) {
